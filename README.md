@@ -53,7 +53,7 @@ List<Entity> GetbyFilter(Expression<Func<Entity, bool>> filter);
      DateTime? BeginDate,
      DateTime? EndDate)
     {
-
+         //burda yukarıda parametre alırken null gelebilme ihtimalleride düşünülmüştür kişi belki tarihe göre arama yapmak istemeyebilir ve onu boş bırakabilir.
         // İstenilen kriterlerin filtreleneceği bir expression oluşturuyoruz.
         Expression<Func<Transaction, bool>> expression = transaction =>
             (string.IsNullOrEmpty(AccountNumber.ToString()) || transaction.AccountNumber == AccountNumber) &&
@@ -75,6 +75,8 @@ Burada istenilen değerleri parametre alarak içeride bir expression oluşturuyo
 
 İçindeki filtreleme işlemlerinden bir tanesini  örnek olarak açıklayalım böylece daha anlaşılır olur.
 
--  (string.IsNullOrEmpty(AccountNumber.ToString()) || transaction.AccountNumber == AccountNumber)
-Eğer ben AccountNumber da hiç değer girmemişsem eşit olmasına bakmaksızın true döndürücek. Çünkü bunu yapmamın sebebi kişi belki filtreleme işlemi yaparken accountNumbera göre yapmak istemeyip ReferenceNumber veya tarih olarak yapıcak olabilir.O zamanda AccountNumber' ı boş bırakabilir.Zaten eğer değer girmişse buna göre filtreleme yapıcak demmiştir o yüzden  direk eşit olmasına bakıcak ve ona göre bu ifadeden true yada false dönücek .
+```c#
+  (string.IsNullOrEmpty(AccountNumber.ToString()) || transaction.AccountNumber == AccountNumber)
+```
+- Eğer ben AccountNumber da hiç değer girmemişsem eşit olmasına bakmaksızın true döndürücek. Çünkü bunu yapmamın sebebi kişi belki filtreleme işlemi yaparken accountNumbera göre yapmak istemeyip ReferenceNumber veya tarih olarak yapıcak olabilir.O zamanda AccountNumber' ı boş bırakabilir.Zaten eğer değer girmişse buna göre filtreleme yapıcak demmiştir o yüzden  direk eşit olmasına bakıcak ve ona göre bu ifadeden true yada false dönücek .
 Aynı mantık diğerleri içinde düşünülerek ona göre filtreleme işlemleri gerçekleştirilmiştir.
